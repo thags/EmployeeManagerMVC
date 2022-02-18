@@ -7,9 +7,10 @@ namespace EmployeeManager.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    private IEmployeeInterface _repository;
+    public HomeController(IEmployeeInterface repository, ILogger<HomeController> logger)
     {
+        _repository = repository;
         _logger = logger;
     }
 

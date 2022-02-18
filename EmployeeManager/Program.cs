@@ -1,7 +1,10 @@
+using EmployeeManager.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IEmployeeInterface, EmployeeRepository>();
 
 var app = builder.Build();
 

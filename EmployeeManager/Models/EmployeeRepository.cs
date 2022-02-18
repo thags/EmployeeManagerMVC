@@ -24,7 +24,7 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = "CREATE DATABASE EmployeeMvc";
+                    command.CommandText = "CREATE DATABASE EmployeeManager";
                     try
                     {
                         command.ExecuteNonQuery();
@@ -52,9 +52,11 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $@"CREATE TABLE [dbo].[EmployeeItems](
+                    command.CommandText = $@"CREATE TABLE [dbo].[Employees](
                         [Id][int] IDENTITY(1, 1) NOT NULL,
-                        [Employee][nvarchar](max) NOT NULL)";
+                        [DepartmentId][int] NOT NULL,
+                        [fName][nvarchar](max) NOT NULL,
+                        [lName][nvarchar](max) NOT NULL)";
 
                     try
                     {
@@ -107,12 +109,17 @@ namespace EmployeeManager.Models
                     {
                         while (dataReader.Read())
                         {
-                            int itemId = (int)dataReader["Id"];
-                            string text = (string)dataReader["Employee"];
+                            int itemId = (int)dataReader[0];
+                            int departmentId = (int)dataReader[1];
+                            string fName = (string)dataReader[2];
+                            string lName = (string)dataReader[3];
+
                             Employee newItem = new Employee
                             {
                                 Id = itemId,
-                                Name = text
+                                DepartmentId = departmentId,
+                                FName = fName,
+                                LName = lName
                             };
                             EmployeeList.Add(newItem);
                         }
