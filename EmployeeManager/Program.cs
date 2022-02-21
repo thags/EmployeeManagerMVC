@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IEmployeeInterface, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeManagerInterface, EmployeeRepository>();
 
 var app = builder.Build();
 

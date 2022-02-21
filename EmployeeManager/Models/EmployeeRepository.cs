@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EmployeeManager.Models
 {
-    public class EmployeeRepository : IEmployeeInterface
+    public class EmployeeRepository : IEmployeeManagerInterface
     {
         private readonly string connectionString;
         private readonly string connectionStringNoDBName;
@@ -14,6 +14,7 @@ namespace EmployeeManager.Models
             connectionStringNoDBName = configuration.GetConnectionString("WebDatabaseNoCatalog");
             createDatabase();
             CreateEmployeeTable();
+            CreateDepartmentTable();
 
         }
 
@@ -77,8 +78,38 @@ namespace EmployeeManager.Models
                 }
             }
         }
+        public void CreateDepartmentTable()
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = $@"CREATE TABLE [dbo].[Department](
+                        [Id][int] IDENTITY(1, 1) NOT NULL,
+                        [Name][nvarchar](max) NOT NULL)";
 
-        void IEmployeeInterface.Add(Employee newEmployee)
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                        Console.WriteLine("Department table created Successfully");
+                    }
+                    catch (System.Exception ex)
+                    {
+                        if (ex.Message == "There is already an object named 'Department' in the database.")
+                        {
+                            Console.WriteLine("DepartmentItems Table already Existed!");
+                        }
+                        else
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                    }
+                }
+            }
+        }
+
+        void IEmployeeManagerInterface.AddEmployee(Employee newEmployee)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -91,12 +122,12 @@ namespace EmployeeManager.Models
             }
         }
 
-        Employee IEmployeeInterface.Get(int id)
+        Employee IEmployeeManagerInterface.GetEmployee(int id)
         {
             throw new NotImplementedException();
         }
 
-        IEnumerable<Employee> IEmployeeInterface.GetAll()
+        IEnumerable<Employee> IEmployeeManagerInterface.GetAllEmployees()
         {
             var EmployeeList = new List<Employee> { };
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -129,7 +160,7 @@ namespace EmployeeManager.Models
             return EmployeeList;
         }
 
-        void IEmployeeInterface.Remove(int id)
+        void IEmployeeManagerInterface.RemoveEmployee(int id)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -150,7 +181,80 @@ namespace EmployeeManager.Models
             }
         }
 
-        bool IEmployeeInterface.Update(Employee employeeUpdate)
+        bool IEmployeeManagerInterface.UpdateEmployee(Employee employeeUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IEmployeeManagerInterface.AddDepartment(Department newDepartment)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = $"Insert into DepartmentItems (Department) values ('{newDepartment}') ";
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        Department IEmployeeManagerInterface.GetDepartment(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<Department> IEmployeeManagerInterface.GetAllDepartments()
+        {
+            var DepartmentList = new List<Department> { };
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT * FROM DepartmentItems ORDER BY Id DESC";
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        while (dataReader.Read())
+                        {
+                            int itemId = (int)dataReader[0];
+                            string name = (string)dataReader[2];
+
+                            Department newItem = new Department
+                            {
+                                Id = itemId,
+                                Name = name
+                            };
+                            DepartmentList.Add(newItem);
+                        }
+                    }
+                }
+            }
+            return DepartmentList;
+        }
+
+        void IEmployeeManagerInterface.RemoveDepartment(int id)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = $"DELETE FROM DepartmentItems WHERE Id = {id}";
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+
+            }
+        }
+
+        bool IEmployeeManagerInterface.UpdateDepartment(Department DepartmentUpdate)
         {
             throw new NotImplementedException();
         }

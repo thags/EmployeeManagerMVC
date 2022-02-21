@@ -7,8 +7,8 @@ namespace EmployeeManager.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private IEmployeeInterface _repository;
-    public HomeController(IEmployeeInterface repository, ILogger<HomeController> logger)
+    private IEmployeeManagerInterface _repository;
+    public HomeController(IEmployeeManagerInterface repository, ILogger<HomeController> logger)
     {
         _repository = repository;
         _logger = logger;
