@@ -1,0 +1,29 @@
+@model EmployeeList
+
+<form asp-action="Insert" id="form-action" method="post" class="form-horizontal" role="form">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
+                <label asp-for="Employee.FName" class="form-label">First Name</label>
+                <input asp-for="Employee.Id" type="hidden" class="form-control" />
+                <input asp-for="Employee.FName" class="form-control" />
+                <span asp-validation-for="Employee.FName" class="text-danger"></span>
+
+                <label asp-for="Employee.LName" class="form-label">Last Name</label>
+                <input asp-for="Employee.LName" class="form-control" />
+                <span asp-validation-for="Employee.LName" class="text-danger"></span>
+
+                <label asp-for="Employee.DepartmentId" class="form-label">Department</label>
+                <input asp-for="Employee.DepartmentId" class="form-control" />
+                <span asp-validation-for="Employee.DepartmentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
+                <input type="submit" id="form-button" class="btn btn-success" value="Add Employee" />
+            </div>
+        </div>
+    </div>
+
+</form>

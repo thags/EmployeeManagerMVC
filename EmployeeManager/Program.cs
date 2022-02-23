@@ -1,4 +1,5 @@
 using EmployeeManager.Models;
+using EmployeeManager.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
