@@ -66,9 +66,9 @@ namespace EmployeeManager.Models
                     }
                     catch (System.Exception ex)
                     {
-                        if (ex.Message == "There is already an object named 'EmployeeItems' in the database.")
+                        if (ex.Message == "There is already an object named 'Employees' in the database.")
                         {
-                            Console.WriteLine("EmployeeItems Table already Existed!");
+                            Console.WriteLine("Employees Table already Existed!");
                         }
                         else
                         {
@@ -116,7 +116,7 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $"Insert into EmployeeItems (Employee) values ('{newEmployee}') ";
+                    command.CommandText = $"Insert into Employees (Employee) values ('{newEmployee}') ";
                     command.ExecuteNonQuery();
                 }
             }
@@ -127,37 +127,42 @@ namespace EmployeeManager.Models
             throw new NotImplementedException();
         }
 
-        IEnumerable<Employee> IEmployeeManagerInterface.GetAllEmployees()
+        EmployeeList IEmployeeManagerInterface.GetAllEmployees()
         {
             var EmployeeList = new List<Employee> { };
+            var listEmployees = new EmployeeList();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $"SELECT * FROM EmployeeItems ORDER BY Id DESC";
+                    command.CommandText = $"SELECT * FROM Employees ORDER BY Id DESC";
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
-                        while (dataReader.Read())
+                        if (dataReader.HasRows)
                         {
-                            int itemId = (int)dataReader[0];
-                            int departmentId = (int)dataReader[1];
-                            string fName = (string)dataReader[2];
-                            string lName = (string)dataReader[3];
-
-                            Employee newItem = new Employee
+                            while (dataReader.Read())
                             {
-                                Id = itemId,
-                                DepartmentId = departmentId,
-                                FName = fName,
-                                LName = lName
-                            };
-                            EmployeeList.Add(newItem);
+                                int itemId = (int)dataReader[0];
+                                int departmentId = (int)dataReader[1];
+                                string fName = (string)dataReader[2];
+                                string lName = (string)dataReader[3];
+    
+                                Employee newItem = new Employee
+                                {
+                                    Id = itemId,
+                                    DepartmentId = departmentId,
+                                    FName = fName,
+                                    LName = lName
+                                };
+                                EmployeeList.Add(newItem);
+                                listEmployees.Employees = EmployeeList;
+                            }
                         }
                     }
                 }
             }
-            return EmployeeList;
+            return listEmployees;
         }
 
         void IEmployeeManagerInterface.RemoveEmployee(int id)
@@ -167,7 +172,7 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $"DELETE FROM EmployeeItems WHERE Id = {id}";
+                    command.CommandText = $"DELETE FROM Employees WHERE Id = {id}";
                     try
                     {
                         command.ExecuteNonQuery();

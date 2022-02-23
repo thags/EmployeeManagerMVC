@@ -2,7 +2,7 @@ namespace EmployeeManager.Models
 {
     public interface IEmployeeManagerInterface
     {
-        IEnumerable<Employee> GetAllEmployees();
+        EmployeeList GetAllEmployees();
         Employee GetEmployee(int employeeId);
         void AddEmployee(Employee newEmployee);
         void RemoveEmployee(int employeeId);
