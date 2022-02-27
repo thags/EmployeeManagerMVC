@@ -1,22 +1,22 @@
-@model EmployeeList
+@model Employee
 
 <form asp-action="InsertEmployee" id="form-action" method="post" class="form-horizontal" role="form">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="">
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
-                <label asp-for="Employee.FName" class="form-label">First Name</label>
-                <input asp-for="Employee.Id" type="hidden" class="form-control" />
-                <input asp-for="Employee.FName" class="form-control" id="fnameEntry"/>
-                <span asp-validation-for="Employee.FName" class="text-danger"></span>
+                <label asp-for="FName" class="form-label">First Name</label>
+                <input asp-for="Id" type="hidden" class="form-control" />
+                <input asp-for="FName" class="form-control" id="fnameEntry"/>
+                <span asp-validation-for="FName" class="text-danger"></span>
 
-                <label asp-for="Employee.LName" class="form-label">Last Name</label>
-                <input asp-for="Employee.LName" class="form-control" id="lnameEntry" />
-                <span asp-validation-for="Employee.LName" class="text-danger"></span>
+                <label asp-for="LName" class="form-label">Last Name</label>
+                <input asp-for="LName" class="form-control" id="lnameEntry" />
+                <span asp-validation-for="LName" class="text-danger"></span>
 
-                <label asp-for="Employee.DepartmentId" class="form-label">Department</label>
-                <input asp-for="Employee.DepartmentId" class="form-control" id="departmentIdEntry" />
-                <span asp-validation-for="Employee.DepartmentId" class="text-danger"></span>
+                <label asp-for="DepartmentId" class="form-label">Department</label>
+                <input asp-for="DepartmentId" class="form-control" id="departmentIdEntry" />
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
             </div>
         </div>
         <div class="row justify-content-center">
