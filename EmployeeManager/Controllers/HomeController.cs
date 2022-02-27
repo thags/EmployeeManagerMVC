@@ -18,5 +18,10 @@ public class HomeController : Controller
     {
         return View(_repository.GetAllEmployees());
     }
+    public RedirectResult InsertEmployee(Employee newEmployee)
+    {
+        _repository.AddEmployee(newEmployee);
+        return Redirect("https://localhost:7016");
+    }
 
 }

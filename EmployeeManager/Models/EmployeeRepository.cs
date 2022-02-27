@@ -116,7 +116,7 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $"Insert into Employees (Employee) values ('{newEmployee}') ";
+                    command.CommandText = $"Insert into Employees (DepartmentId, fName, lName) values ('{newEmployee.DepartmentId}', '{newEmployee.FName}', '{newEmployee.LName}') ";
                     command.ExecuteNonQuery();
                 }
             }
