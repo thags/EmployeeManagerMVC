@@ -23,5 +23,10 @@ public class HomeController : Controller
         _repository.AddEmployee(newEmployee.Employee);
         return Redirect("https://localhost:7016");
     }
+    public RedirectResult RemoveEmployee(int employeeId)
+    {
+        _repository.RemoveEmployee(employeeId);
+        return Redirect("https://localhost:7016");
+    }
 
 }
