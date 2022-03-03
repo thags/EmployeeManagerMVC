@@ -215,10 +215,10 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = @$"UPDATE employee 
-                        SET DepartmentId = '{employeeUpdate.DepartmentId}'
-                        SET fname = '{employeeUpdate.FName}'
-                        SET lname = '{employeeUpdate.LName}'
+                    command.CommandText = @$"UPDATE Employees
+                        SET DepartmentId = '{employeeUpdate.DepartmentId}',
+                        fName = '{employeeUpdate.FName}',
+                        lName = '{employeeUpdate.LName}'
                         WHERE Id = '{employeeUpdate.Id}'";
                     try
                     {
