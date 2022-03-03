@@ -30,5 +30,16 @@ public class HomeController : Controller
         _repository.RemoveEmployee(employeeId);
         return Json(new{});
     }
+    [HttpGet]
+    public JsonResult PopulateForm(int id)
+    {
+        Employee employee = _repository.GetEmployee(id);
+        return Json(employee);
+    }
+    public RedirectResult Update(Employee employee)
+    {
+        _repository.UpdateEmployee(employee);
+        return Redirect("https://localhost:7016/");
+    }
 
 }
