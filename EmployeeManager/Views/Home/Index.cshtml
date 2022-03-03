@@ -24,7 +24,7 @@
                             <td class="todos-column">@t.DepartmentId</td>
                             <td class="buttons-column">
                                 <input type="submit" class="btn btn-danger" value="Delete" onclick="RemoveEmployee(@t.Id)" />
-                                <input type="submit" class="btn btn-primary" value="Update" onclick="" />
+                                <input type="submit" class="btn btn-primary" value="Update" onclick="PopulateForm(@t.Id)" />
                             </td>
                         </tr>
                     }
