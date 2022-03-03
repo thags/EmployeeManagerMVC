@@ -7,14 +7,19 @@ namespace EmployeeManager.Models
     {
         private readonly string connectionString;
         private readonly string connectionStringNoDBName;
+        private bool databaseCreated;
 
         public EmployeeRepository(IConfiguration configuration)
         {
             connectionString = configuration.GetConnectionString("WebDatabase");
             connectionStringNoDBName = configuration.GetConnectionString("WebDatabaseNoCatalog");
-            createDatabase();
-            CreateEmployeeTable();
-            CreateDepartmentTable();
+            databaseCreated = bool.Parse(configuration.GetConnectionString("databaseCreated"));
+            if(!databaseCreated)
+            {
+                createDatabase();
+                CreateEmployeeTable();
+                CreateDepartmentTable();
+            }
 
         }
 
