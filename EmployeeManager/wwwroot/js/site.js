@@ -22,10 +22,10 @@ function PopulateForm(i)
         },
         dataType: 'json',
         success: function (response){
-            $("#Employee_FName").val(response.FName);
-            $("#Employee_LName").val(response.LName);
-            $("#Employee_Id").val(response.Id);
-            $("#Employee_DepartmentId").val(response.DepartmentId);
+            $("#Employee_FName").val(response.fName);
+            $("#Employee_LName").val(response.lName);
+            $("#Employee_Id").val(response.id);
+            $("#Employee_DepartmentId").val(response.departmentId);
 
 
             $("#form-button").val("Update Employee");
