@@ -124,7 +124,29 @@ namespace EmployeeManager.Models
 
         Employee IEmployeeManagerInterface.GetEmployee(int id)
         {
-            throw new NotImplementedException();
+            var employee = new Employee();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT * FROM Employees WHERE Id = {id}";
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+                                employee.Id = (int)dataReader[0];
+                                employee.DepartmentId = (int)dataReader[1];
+                                employee.FName = (string)dataReader[2];
+                                employee.LName = (string)dataReader[3];
+                            }
+                        }
+                    }
+                }
+            }
+            return employee;
         }
 
         EmployeeList IEmployeeManagerInterface.GetAllEmployees()
@@ -188,7 +210,29 @@ namespace EmployeeManager.Models
 
         bool IEmployeeManagerInterface.UpdateEmployee(Employee employeeUpdate)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = @$"UPDATE employee 
+                        SET DepartmentId = '{employeeUpdate.DepartmentId}'
+                        SET fname = '{employeeUpdate.FName}'
+                        SET lname = '{employeeUpdate.LName}'
+                        WHERE Id = '{employeeUpdate.Id}'";
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (SqlException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        return false;
+                    }
+                }
+
+            }
+            return true;
         }
 
         void IEmployeeManagerInterface.AddDepartment(Department newDepartment)
