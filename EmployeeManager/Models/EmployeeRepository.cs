@@ -251,7 +251,7 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $"Insert into DepartmentItems (Department) values ('{newDepartment}') ";
+                    command.CommandText = $"Insert into Department (Name) values ('{newDepartment.Name}') ";
                     command.ExecuteNonQuery();
                 }
             }
@@ -265,7 +265,7 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $"SELECT * FROM DepartmentItems WHERE Id = {id}";
+                    command.CommandText = $"SELECT * FROM Department WHERE Id = {id}";
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
                         if (dataReader.HasRows)
@@ -290,7 +290,7 @@ namespace EmployeeManager.Models
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    command.CommandText = $"SELECT * FROM DepartmentItems ORDER BY Id DESC";
+                    command.CommandText = $"SELECT * FROM Department ORDER BY Id DESC";
                     using (SqlDataReader dataReader = command.ExecuteReader())
                     {
                         while (dataReader.Read())

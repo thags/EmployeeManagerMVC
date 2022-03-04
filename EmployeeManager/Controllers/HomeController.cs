@@ -20,6 +20,12 @@ public class HomeController : Controller
     }
     public RedirectResult InsertEmployee(EmployeeList newEmployee)
     {
+        Department targetDepartment = _repository.GetDepartment(newEmployee.Employee.DepartmentId);
+        if(targetDepartment.Name == null)
+        {
+            _repository.AddDepartment(new Department{Name=$"test{newEmployee.Employee.DepartmentId}"});
+        }
+        
         _repository.AddEmployee(newEmployee.Employee);
         return Redirect("https://localhost:7016");
     }
