@@ -14,12 +14,10 @@ namespace EmployeeManager.Models
             connectionString = configuration.GetConnectionString("WebDatabase");
             connectionStringNoDBName = configuration.GetConnectionString("WebDatabaseNoCatalog");
             databaseCreated = bool.Parse(configuration.GetConnectionString("databaseCreated"));
-            if(!databaseCreated)
-            {
                 createDatabase();
-                CreateEmployeeTable();
                 CreateDepartmentTable();
-            }
+                CreateEmployeeTable();
+                
 
         }
 
@@ -62,7 +60,12 @@ namespace EmployeeManager.Models
                         [Id][int] IDENTITY(1, 1) NOT NULL,
                         [DepartmentId][int] NOT NULL,
                         [fName][nvarchar](max) NOT NULL,
-                        [lName][nvarchar](max) NOT NULL)";
+                        [lName][nvarchar](max) NOT NULL,
+                        CONSTRAINT[PK_Employees] PRIMARY KEY CLUSTERED([Id] ASC),
+                        CONSTRAINT[FK_EmployeeDepartment] FOREIGN KEY([DepartmentId]) 
+                        REFERENCES[dbo].[Department]([Id]) 
+                        ON UPDATE CASCADE 
+                        ON DELETE CASCADE)";
 
                     try
                     {
@@ -92,7 +95,8 @@ namespace EmployeeManager.Models
                     connection.Open();
                     command.CommandText = $@"CREATE TABLE [dbo].[Department](
                         [Id][int] IDENTITY(1, 1) NOT NULL,
-                        [Name][nvarchar](max) NOT NULL)";
+                        [Name][nvarchar](max) NOT NULL,
+                        CONSTRAINT[PK_Departments] PRIMARY KEY CLUSTERED([Id] ASC))";
 
                     try
                     {
@@ -255,7 +259,27 @@ namespace EmployeeManager.Models
 
         Department IEmployeeManagerInterface.GetDepartment(int id)
         {
-            throw new NotImplementedException();
+            var department = new Department{Name = null};
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT * FROM DepartmentItems WHERE Id = {id}";
+                    using (SqlDataReader dataReader = command.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+                                department.Id = (int)dataReader[0];
+                                department.Name = (string)dataReader[1];
+                            }
+                        }
+                    }
+                }
+            }
+            return department;
         }
 
         IEnumerable<Department> IEmployeeManagerInterface.GetAllDepartments()
