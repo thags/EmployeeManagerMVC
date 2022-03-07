@@ -1,6 +1,26 @@
 @model EmployeeList
 
-<form asp-action="InsertEmployee" id="form-action" method="post" class="form-horizontal" role="form">
+
+<form asp-action="InsertDepartment" id="form-action" method="post" class="form-horizontal" role="form">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10">
+                <label asp-for="Department.Name" class="form-label">Department Name</label>
+                <input asp-for="Department.Id" type="hidden" class="form-control" />
+                <input asp-for="Department.Name" class="form-control"/>
+                <span asp-validation-for="Department.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
+                <input type="submit" id="AddDepartment-button" class="btn btn-success" value="Add New Department" />
+            </div>
+        </div>
+    </div>
+
+</form>
+<form asp-action="InsertEmployee" id="Employee-form-action" method="post" class="form-horizontal" role="form">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="">
         <div class="row justify-content-center">
@@ -15,13 +35,21 @@
                 <span asp-validation-for="Employee.LName" class="text-danger"></span>
 
                 <label asp-for="Employee.DepartmentId" class="form-label">Department</label>
-                <input asp-for="Employee.DepartmentId" class="form-control" />
+                <select asp-for="Employee.DepartmentId" class="form-control">
+                    @if(Model.Departments != null )
+                    {
+                        @foreach (var t in Model.Departments)
+                        {
+                            <option value="@t.Id"> @t.Name </option>
+                        }
+                    }
+                </select>
                 <span asp-validation-for="Employee.DepartmentId" class="text-danger"></span>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-8 col-md-8 col-sm-10 mt-3 mb-5">
-                <input type="submit" id="form-button" class="btn btn-success" value="Add Employee" />
+                <input type="submit" id="Employee-form-button" class="btn btn-success" value="Add Employee" />
             </div>
         </div>
     </div>

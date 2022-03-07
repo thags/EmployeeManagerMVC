@@ -16,7 +16,10 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View(_repository.GetAllEmployees());
+        var employeeList = new EmployeeList();
+        employeeList.Employees = _repository.GetAllEmployees().Employees;
+        employeeList.Departments = _repository.GetAllDepartments();
+        return View(employeeList);
     }
     public RedirectResult InsertEmployee(EmployeeList newEmployee)
     {
@@ -27,6 +30,16 @@ public class HomeController : Controller
         }
         
         _repository.AddEmployee(newEmployee.Employee);
+        return Redirect("https://localhost:7016");
+    }
+    public RedirectResult InsertDepartment(EmployeeList newDepartment)
+    {
+        Department targetDepartment = new Department{Name=newDepartment.Department.Name};
+        if(targetDepartment != null)
+        {
+            _repository.AddDepartment(targetDepartment);
+        }
+        
         return Redirect("https://localhost:7016");
     }
 

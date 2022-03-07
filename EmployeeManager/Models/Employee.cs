@@ -6,6 +6,6 @@ public class Employee
 
     public int DepartmentId {get; set;}
 
-    public string? FName {get; set;}
-    public string? LName {get; set;}
+    public string FName {get; set;}
+    public string LName {get; set;}
 }

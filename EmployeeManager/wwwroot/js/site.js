@@ -28,8 +28,8 @@ function PopulateForm(i)
             $("#Employee_DepartmentId").val(response.departmentId);
 
 
-            $("#form-button").val("Update Employee");
-            $("#form-action").attr("action", "/Home/Update");
+            $("#Employee-form-button").val("Update Employee");
+            $("#Employee-form-action").attr("action", "/Home/Update");
         }
     });
 }

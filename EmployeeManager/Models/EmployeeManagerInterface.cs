@@ -7,7 +7,7 @@ namespace EmployeeManager.Models
         void AddEmployee(Employee newEmployee);
         void RemoveEmployee(int employeeId);
         bool UpdateEmployee(Employee updatedEmployee);
-        IEnumerable<Department> GetAllDepartments();
+        List<Department> GetAllDepartments();
         Department GetDepartment(int departmentId);
         void AddDepartment(Department newDepartment);
         void RemoveDepartment(int departmentId);

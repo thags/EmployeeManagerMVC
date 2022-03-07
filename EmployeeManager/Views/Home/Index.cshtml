@@ -8,7 +8,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
-                    <th scope="col">Department Id</th>
+                    <th scope="col">Department</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -18,10 +18,10 @@
                     @foreach (var t in Model.Employees)
                     {
                         <tr>
-                            <th class="todos-column" scope="row">@t.Id</th>
-                            <td class="todos-column">@t.FName</td>
-                            <td class="todos-column">@t.LName</td>
-                            <td class="todos-column">@t.DepartmentId</td>
+                            <th class="Employees-column" scope="row">@t.Id</th>
+                            <td class="Employees-column">@t.FName</td>
+                            <td class="Employees-column">@t.LName</td>
+                            <td class="Employees-column">@Model.Departments.Where(x => x.Id == t.DepartmentId).Select(x => x.Name).First();</td>
                             <td class="buttons-column">
                                 <input type="submit" class="btn btn-danger" value="Delete" onclick="RemoveEmployee(@t.Id)" />
                                 <input type="submit" class="btn btn-primary" value="Update" onclick="PopulateForm(@t.Id)" />

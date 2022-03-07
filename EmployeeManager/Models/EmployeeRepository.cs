@@ -282,7 +282,7 @@ namespace EmployeeManager.Models
             return department;
         }
 
-        IEnumerable<Department> IEmployeeManagerInterface.GetAllDepartments()
+        List<Department> IEmployeeManagerInterface.GetAllDepartments()
         {
             var DepartmentList = new List<Department> { };
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -296,7 +296,7 @@ namespace EmployeeManager.Models
                         while (dataReader.Read())
                         {
                             int itemId = (int)dataReader[0];
-                            string name = (string)dataReader[2];
+                            string name = (string)dataReader[1];
 
                             Department newItem = new Department
                             {
